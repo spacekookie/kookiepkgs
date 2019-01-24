@@ -3,22 +3,15 @@
  * sorted alphabetically
  */
 
-{ system ? builtins.currentSystem }:                                                   
-                                                                                   
-let                                                                                    
-   pkgs = import <nixpkgs> { inherit system; };                                         
-                                                          
-   callPackage = pkgs.lib.callPackageWith (pkgs // self);                               
+{ system ? builtins.currentSystem }:
 
-   self = {                                                                             
-      spacekookie-de = callPackage ./pkgs/spacekookie-de { };                                            
-   };                                                                                   
-   in self 
+let
+   pkgs = import <nixpkgs> { inherit system; };
 
-# { lib, config, pkgs ? import <nixpkgs> {} }:
-# 
-# rec {
-#   inherit lib config pkgs;
-# 
-#   spacekookie-de = callPackage pkgs/spacekookie-de { };
-# }
+   callPackage = pkgs.lib.callPackageWith (pkgs // self);
+
+   self = {
+      spacekookie-de = callPackage ./pkgs/spacekookie-de { };
+   };
+   in self
+
