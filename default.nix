@@ -11,7 +11,7 @@ let
    callPackage = pkgs.lib.callPackageWith (pkgs // self);
 
    self = {
-      spacekookie.de = callPackage ./pkgs/spacekookie.de { };
+      spacekookie-de = callPackage ./pkgs/spacekookie-de { };
    };
    in self
 
