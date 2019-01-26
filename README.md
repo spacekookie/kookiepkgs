@@ -15,3 +15,5 @@ be more suitable for `nixpkgs` directly.
 Following is a list of all the things in this repo
 
 - [spacekookie.de website](pkgs/spacekookie-de/default.nix)
+- [Initial `forge` package](pkgs/forge/default.nix) (will be upstreamed!)
+- [Initial `forge` module](modules/forge/default.nix) (will be upstreamed!)
