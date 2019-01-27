@@ -1,3 +1,6 @@
-[
-  ./forge/default.nix
-]
+{ ... }:
+
+{
+  imports = [ ./forge/default.nix ];
+}
+
