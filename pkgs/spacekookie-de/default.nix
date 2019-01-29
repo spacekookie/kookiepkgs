@@ -1,4 +1,4 @@
-{ stdenv, fetchFromGitHub, nix-prefetch-github, pkgs, ... }:
+{ stdenv, fetchFromGitHub, pkgs, ... }:
 
 let
   json = with builtins; fromJSON (readFile ./meta.json);
