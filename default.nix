@@ -11,7 +11,9 @@ let
    callPackage = pkgs.lib.callPackageWith (pkgs // self);
 
    self = {
+      # forge = callPackage ./pkgs/forge { };
       spacekookie-de = callPackage ./pkgs/spacekookie-de { };
+      pleroma = callPackage ./pkgs/pleroma { };
    };
    in self
 
