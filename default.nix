@@ -13,7 +13,9 @@ let
    self = {
       # forge = callPackage ./pkgs/forge { };
       spacekookie-de = callPackage ./pkgs/spacekookie-de { };
+      barrel-blog = callPackage ./pkgs/barrel-blog { };
       pleroma = callPackage ./pkgs/pleroma { };
+      htop = callPackage ./pkgs/htop { };
    };
    in self
 

@@ -17,7 +17,7 @@ let
 
   cfg = config.services.pleroma;
 
-  finalPkg = (mixToNix {
+  pleromaPkg = (mixToNix {
     src = stdenv.mkDerivation {
       name = "pleroma";
       src = fetchGit {
@@ -62,6 +62,5 @@ in
 
     config = mkIf cfg.enable {
       environment.systemPackages = [ pleromaPkg ];
-
     };
   }
