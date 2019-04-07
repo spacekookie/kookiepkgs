@@ -15,7 +15,7 @@ in
       sha256 = masterSha256;
     }; 
 
-    buildInputs = with pkgs.pythonPackages; [ pelican webassets markdown ];
+    buildInputs = with pkgs.python3Packages; [ pelican webassets markdown ];
 
     installPhase = ''
       pelican content
