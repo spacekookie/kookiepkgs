@@ -1,3 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env nix-shell
+#!nix-shell -i bash -p nix-prefetch-github 
 
-nix-shell -p nix-prefetch-github --run "nix-prefetch-github --rev master spacekookie website > pkgs/spacekookie-de/meta.json"
+nix-prefetch-github --rev master spacekookie website > pkgs/spacekookie-de/meta.json
