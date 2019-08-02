@@ -9,7 +9,7 @@ stdenv.mkDerivation {
   installPhase = ''
     mkdir -p $out/bin
     mkdir -p $out/share
-    cp invoice.sh $out/bin/
+    cp invoice.sh $out/bin/invoice
     cp template.tex $out/share/
   '';
 

@@ -2,11 +2,13 @@
 
 set -e
 
-TARGET=$1
-ACCOUNT=$(basename $TARGET .yml)
-if [ -z $TARGET ]; then
-  echo "Usage: invoicer <file>"
+SOURCE=$1
+TARGET=$(dirname $SOURCE)
+ACCOUNT=$(basename $SOURCE .yml)
+if [ -z $SOURCE ]; then
+  echo "Usage: invoice <file>"
   exit 2
 fi
 
-pandoc $TARGET -o $ACCOUNT.pdf --template=../share/template.tex --pdf-engine=xelatex
+pandoc $SOURCE -o $DIRNAME/$ACCOUNT.pdf \
+  --template=../share/template.tex --pdf-engine=xelatex
