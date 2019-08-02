@@ -11,4 +11,4 @@ if [ -z $SOURCE ]; then
 fi
 
 pandoc $SOURCE -o $DIRNAME/$ACCOUNT.pdf \
-  --template=../share/template.tex --pdf-engine=xelatex
+  --template=$TEMPLATE_FILE --pdf-engine=xelatex

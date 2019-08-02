@@ -61,8 +61,12 @@ $endif$
 }
 
 % To display custom date
+\def\parsedate#1-#2-#3\endparse{
+  \date{\formatdate{#3}{#2}{#1}}
+}
+
 \usepackage[nodayofweek]{datetime}
-\newdate{date}{$date$}
+\newdate{date}{\parsedate{$date$}}
 \date{\displaydate{date}}
 
 % DOCUMENT

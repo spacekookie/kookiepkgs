@@ -1,17 +1,23 @@
-{ stdenv, pandoc, gnumake, texlive }:
+{ stdenv, makeWrapper, coreutils, pandoc, gnumake, texlive }:
 
 stdenv.mkDerivation {
   pname = "invoice";
   version = "0.1.0";
   src = ./.;
 
-  buildInputs = [ pandoc gnumake texlive.combined.scheme-full ];
+  nativeBuildInputs = [ makeWrapper ];
+
   installPhase = ''
-    mkdir -p $out/bin
-    mkdir -p $out/share
+    mkdir -p $out/{bin,share}
     cp invoice.sh $out/bin/invoice
     cp template.tex $out/share/
+
+    wrapProgram $out/bin/invoice \
+      --set PATH $out/bin:${stdenv.lib.makeBinPath
+        [ coreutils pandoc gnumake texlive.combined.scheme-full ]} \
+      --set TEMPLATE_FILE $out/share/template.tex
   '';
+
 
   meta = with stdenv.lib; {
     description = "Generate dynamic invoices based on yaml descriptors";
