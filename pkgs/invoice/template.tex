@@ -1,0 +1,142 @@
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[$fontsize$, a4paper]{scrartcl}
+
+% LAYOUT
+%--------------------------------
+\usepackage{geometry} 
+\geometry{$geometry$}
+\pagenumbering{gobble}
+\usepackage[document]{ragged2e}
+\usepackage{scrlayer-scrpage}
+
+% TYPOGRAPHY
+%--------------------------------
+\usepackage{fontspec} 
+\usepackage{xunicode}
+\usepackage{xltxtra}
+
+\setlength{\parskip}{1em}
+
+% Command required by how Pandoc handles the list conversion
+\providecommand{\tightlist} {
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}
+}
+
+% TABLE CUSTOMIZATION
+%--------------------------------
+\usepackage{spreadtab}
+\usepackage[compact]{titlesec}
+\usepackage{hhline}
+\usepackage{enumitem}
+\usepackage{arydshln}
+
+\titlespacing*{\section}{0pt}{3pt}{-7pt}
+\renewcommand{\arraystretch}{1.5}
+\setlist{nolistsep}
+\setlist[itemize]{leftmargin=0.5cm}
+\setlength{\tabcolsep}{9pt}
+
+
+% LANGUAGE
+%--------------------------------
+$if(lang)$
+\usepackage{polyglossia}
+\setmainlanguage{$lang$}
+$endif$
+
+% PDF SETUP
+%--------------------------------
+\usepackage[xetex, bookmarks, colorlinks, breaklinks]{hyperref}
+\hypersetup
+{
+  pdfauthor={$author$},
+  pdfsubject=Invoice Nr. $invoice-nr$,
+  pdftitle=Invoice Nr. $invoice-nr$,
+  linkcolor=blue,
+  citecolor=blue,
+  filecolor=black,
+  urlcolor=blue
+}
+
+% To display custom date
+\usepackage[nodayofweek]{datetime}
+\newdate{date}{31}{07}{2019}
+\date{\displaydate{date}}
+
+% DOCUMENT
+%--------------------------------
+
+\ohead{
+    \textsc{\textbf{$author$}} \\
+    $for(from)$
+    \textsc{$from$} \\
+    $endfor$
+    \textsc{USt-IdNr: $ustid$} \\
+    \vspace{1em}
+}
+
+\begin{document}
+
+\vspace{1em}
+
+\normalsize \sffamily
+$for(to)$
+$to$\\
+$endfor$
+
+\vspace{6em}
+
+\begin{flushright}
+  \small
+  $city$, \displaydate{date}
+\end{flushright}
+
+\vspace{1em}
+
+
+\section*{\textsc{Invoice} \textsc{\#$invoice-nr$}}
+\footnotesize
+\newcounter{pos}
+\setcounter{pos}{0}
+\STautoround*{2} % Get spreadtab to always display the decimal part
+$if(commasep)$\STsetdecimalsep{,}$endif$ % Use comma as decimal separator
+
+\begin{spreadtab}{{tabular}[t t t]{lp{8.2cm}r}}
+  \hdashline[1pt/1pt]
+  @ \noalign{\vskip 2mm} \textbf{Pos.} & @ \textbf{Description} & @ \textbf{Prices in $currency$} \\ \hline
+      $for(service)$ @ \noalign{\vskip 2mm} \refstepcounter{pos} \thepos 
+        & @ $service.description$ 
+        $if(service.details)$\newline \begin{itemize} 
+          $for(service.details)$\scriptsize \item $service.details$ 
+          $endfor$ \end{itemize}
+          $endif$ & $service.price$\\$endfor$ \noalign{\vskip 2mm} \hline
+  $if(VAT)$
+    @ & @ \multicolumn{1}{r}{Subtotal:}                & :={sum(c1:[0,-1])} \\ \hhline{~~-}
+    @ & @ \multicolumn{1}{r}{VAT $VAT$\%:}               & $VAT$/100*[0,-1] \\ \hhline{~~-}
+  $endif$
+  @ & @ \multicolumn{1}{r}{\textbf{Total:}}   & \textbf{:={$if(VAT)$[0,-1]+[0,-2]$else$sum(c1:[0,-1])$endif$}} \\ \hhline{~~-}
+\end{spreadtab}
+
+
+\vspace{15mm}
+
+\sffamily
+\small
+
+Please transfer the due amount to the following bank account
+within the next 14 days:
+
+\strong{Kontoinhaber}: $author$ \\
+\strong{Kreditinstitut}: $bank$ \\
+\strong{IBAN}: $bank_iban$ \\
+\strong{BIC}: $bank_bic$
+
+Best regards,
+
+\medskip
+
+$author$
+
+\end{document}

@@ -14,6 +14,7 @@ let
       # forge = callPackage ./pkgs/forge { };
       spacekookie-de = callPackage ./pkgs/spacekookie-de { };
       barrel-blog = callPackage ./pkgs/barrel-blog { };
+      invoice = callPackage ./pkgs/invoice { };
       pleroma = callPackage ./pkgs/pleroma { };
       htop = callPackage ./pkgs/htop { };
    };
